@@ -1,0 +1,52 @@
+name: "Release"
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build-all:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Rust cache
+      - name: Rust cargo cache
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-rust-cargo
+        with:
+          path: |
+            ~/.cargo
+            target
+          key: ${{ runner.os }}-build-${{ env.cache-name }}
+
+      # Rust toolchain
+      - name: Rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+
+      # Rust cargo
+      - run: |
+          cargo build --verbose --all
+          cargo test --verbose
+          cargo doc --verbose
+
+      # Release
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          draft: false
+
+      # Cargo publish
+      - name: Cargo publish
+        env:
+          CARGO_TOKEN: ${{ secrets.CARGO_TOKEN }}
+        run: |
+          cargo publish --token "$CARGO_TOKEN"
+

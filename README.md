@@ -16,6 +16,8 @@ Build arp frame
     let mut buff = [...];
     let builder = ARPSliceBuilder::new(buff).unwrap();
 
+There are some examples in test cases.
+
 ## License
 
 MIT

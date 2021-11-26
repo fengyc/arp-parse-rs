@@ -1,6 +1,7 @@
 //! ARP package parsing and building.
+#![no_std]
 
-use std::fmt::{Debug, Display, Formatter};
+use core::fmt::{Debug, Display, Formatter};
 
 use byteorder::{ByteOrder, NetworkEndian};
 
@@ -47,12 +48,10 @@ pub enum Error {
 }
 
 impl Display for Error {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut Formatter<'_>) -> core::fmt::Result {
         write!(f, "{:?}", self)
     }
 }
-
-impl std::error::Error for Error {}
 
 /// ARP packet slice
 pub struct ARPSlice<'a> {

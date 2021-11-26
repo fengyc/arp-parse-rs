@@ -1,5 +1,7 @@
 # arp-parse
 
+[![Main](https://github.com/fengyc/arp-parse-rs/actions/workflows/main.yml/badge.svg)](https://github.com/fengyc/arp-parse-rs/actions/workflows/main.yml)
+
 RFC826 ARP packet parsing and building.
 
 ## Examples
